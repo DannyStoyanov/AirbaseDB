@@ -1,4 +1,4 @@
-import AirbaseSystem.AirbaseSystem;
+import service.AirbaseSystem;
 
 class Airbase {
 

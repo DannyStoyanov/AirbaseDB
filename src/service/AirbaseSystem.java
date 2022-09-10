@@ -1,9 +1,10 @@
-package AirbaseSystem;
+package service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AirbaseSystem {
     private Dispatcher dispatcher;
@@ -25,7 +26,8 @@ public class AirbaseSystem {
     }
 
     private ParsedCommand parseLineToCommand(String line) {
-        String[] args = line.split(" ");
+        String[] tokens = line.split(" ");
+        String[]  args = Arrays.stream(tokens).filter(s -> !s.isEmpty()).toArray(String[]::new);
         String commandName = args[0];
         ArrayList<String> commandArguments = new ArrayList<String>();
         for (int i = 1; i < args.length; i++) {

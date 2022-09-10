@@ -1,8 +1,7 @@
-package AirbaseSystem;
+package service;
 
-import ICommand.*;
+import commands.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Dispatcher {
@@ -11,6 +10,7 @@ public class Dispatcher {
     public Dispatcher() {
         this.commands = new ArrayList<ICommand>();
         this.commands.add(new Exit());
+        this.commands.add(new Create());
         // TODO: add rest commands
     }
 

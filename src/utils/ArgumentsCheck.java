@@ -4,9 +4,9 @@ import exceptions.ArgumentsException;
 import java.util.ArrayList;
 
 public class ArgumentsCheck {
-    public void assertZeroArguments(ArrayList<String> args) throws ArgumentsException {
-        if(args.size() != 0) {
-            throw new ArgumentsException("Arguments are not zero");
+    public void assertArgumentsCount(ArrayList<String> args, int count) throws ArgumentsException {
+        if(args.size() != count) {
+            throw new ArgumentsException("Arguments are invalid count.");
         }
     }
 }

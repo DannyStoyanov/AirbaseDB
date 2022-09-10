@@ -1,10 +1,11 @@
-package ICommand;
+package commands;
 
 import java.util.ArrayList;
 
 abstract public class ICommand {
     private String name;
     private ArrayList<String> arguments;
+    private int argumentsCount;
 
     ICommand() {
         this.name = "";
@@ -28,8 +29,16 @@ abstract public class ICommand {
         return arguments;
     }
 
+    public int getArgumentsCount() {
+        return argumentsCount;
+    }
+
     // Mutators:
     public void setArguments(ArrayList<String> arguments) {
         this.arguments = arguments;
+    }
+
+    public void setArgumentsCount(int argumentsCount) {
+        this.argumentsCount = argumentsCount;
     }
 }

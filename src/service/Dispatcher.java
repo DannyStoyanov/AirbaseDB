@@ -5,25 +5,28 @@ import commands.*;
 import java.util.ArrayList;
 
 public class Dispatcher {
-    private ArrayList<ICommand> commands;
+    private ArrayList<Command> commands;
 
     public Dispatcher() {
-        this.commands = new ArrayList<ICommand>();
-        this.commands.add(new Exit());
-        this.commands.add(new Create());
+        this.commands = new ArrayList<Command>();
+        this.commands.add(new ExitCommand());
+        this.commands.add(new CreateCommand());
+        this.commands.add(new ShowCommand());
+//        this.commands.add(new SearchCommand());
+//        this.commands.add(new UpdateCommand());
         // TODO: add rest commands
     }
 
-    public Dispatcher(ArrayList<ICommand> commands) {
+    public Dispatcher(ArrayList<Command> commands) {
         this.commands = commands;
     }
 
-    public ArrayList<ICommand> getCommands() {
+    public ArrayList<Command> getCommands() {
         return commands;
     }
 
     public void processCommand(AirbaseSystem.ParsedCommand parsedCommand) {
-        for (ICommand command: this.commands) {
+        for (Command command: this.commands) {
             if(parsedCommand.getCommandName().equals(command.getName())) {
                 command.execute(parsedCommand.getCommandArguments());
                 break;

@@ -2,17 +2,17 @@ package commands;
 
 import java.util.ArrayList;
 
-abstract public class ICommand {
+abstract public class Command {
     private String name;
     private ArrayList<String> arguments;
     private int argumentsCount;
 
-    ICommand() {
+    Command() {
         this.name = "";
         this.arguments = new ArrayList<String>();
     }
 
-    ICommand(String name) {
+    Command(String name) {
         this.name = name;
         this.arguments = new ArrayList<String>();
     }

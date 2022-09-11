@@ -97,4 +97,10 @@ public class Utils {
             throw new ArgumentsException("update command \"new value\" argument is not valid string.");
         }
     }
+
+    public static void areValidSearchCommandArguments(ArrayList<String> args) throws ArgumentsException {
+        if (!isNumeric(args.get(0))) {
+            throw new ArgumentsException("update command \"id\" argument is not a number.");
+        }
+    }
 }

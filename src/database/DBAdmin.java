@@ -23,6 +23,10 @@ public class DBAdmin {
         }
     }
 
+    private void printRecord(AirplaneRecord record) {
+        System.out.println(record);
+    }
+
     public DBAdmin(String database) {
         this.database = database;
     }
@@ -53,19 +57,19 @@ public class DBAdmin {
     private void changeAttributeValue(ArrayList<AirplaneRecord> records, int index, String attribute, String newValue) throws ArgumentsException {
         switch (attribute) {
             case "name":
-                if(!Utils.isValidString(newValue)) {
+                if (!Utils.isValidString(newValue)) {
                     throw new ArgumentsException("update command \"new_value\" argument is not valid.");
                 }
                 records.get(index).setName(newValue);
                 break;
             case "type":
-                if(!Utils.isValidString(newValue)) {
+                if (!Utils.isValidString(newValue)) {
                     throw new ArgumentsException("update command \"new_value\" argument is not valid.");
                 }
                 records.get(index).setType(newValue);
                 break;
             case "flights":
-                if(!Utils.isNumeric(newValue)) {
+                if (!Utils.isNumeric(newValue)) {
                     throw new ArgumentsException("update command \"new_value\" argument is not valid.");
                 }
                 records.get(index).setFlights(Integer.parseInt(newValue));
@@ -80,6 +84,20 @@ public class DBAdmin {
         for (int i = 0; i < records.size(); i++) {
             if (records.get(i).getId() == id) {
                 changeAttributeValue(records, i, attribute, newValue);
+                foundRecord = true;
+                break;
+            }
+        }
+        if (!foundRecord) {
+            throw new NotExistingRecord("Not existing record with id: " + id + " in the database.");
+        }
+    }
+
+    private void findAndShowRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
+        boolean foundRecord = false;
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == id) {
+                printRecord(records.get(i));
                 foundRecord = true;
                 break;
             }
@@ -162,7 +180,7 @@ public class DBAdmin {
             findAndDeleteRecord(records, id);
             saveRecords(records);
             os.close();
-        } catch(NotExistingRecord ex) {
+        } catch (NotExistingRecord ex) {
             ex.printStackTrace();
         } catch (Exception ioException) {
             ioException.printStackTrace();
@@ -178,7 +196,22 @@ public class DBAdmin {
             findAndUpdateRecord(records, id, attribute, newValue);
             saveRecords(records);
             is.close();
-        } catch(NotExistingRecord ex) {
+        } catch (NotExistingRecord ex) {
+            ex.printStackTrace();
+        } catch (Exception ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void searchRecord(int id) {
+        try {
+            FileInputStream fileStream = new FileInputStream(this.database);
+            ObjectInputStream is = new ObjectInputStream(fileStream);
+            Object obj = is.readObject();
+            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+            findAndShowRecord(records, id);
+            is.close();
+        } catch (NotExistingRecord ex) {
             ex.printStackTrace();
         } catch (Exception ioException) {
             ioException.printStackTrace();

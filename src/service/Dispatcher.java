@@ -13,10 +13,10 @@ public class Dispatcher {
         this.commands.add(new ExitCommand());
         this.commands.add(new CreateCommand());
         this.commands.add(new ShowCommand());
-//        this.commands.add(new SearchCommand());
-//        this.commands.add(new HelpCommand());
         this.commands.add(new DeleteCommand());
         this.commands.add(new UpdateCommand());
+        this.commands.add(new SearchCommand());
+//        this.commands.add(new HelpCommand());
     }
 
     public Dispatcher(ArrayList<Command> commands) {

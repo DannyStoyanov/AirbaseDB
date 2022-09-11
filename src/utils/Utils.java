@@ -5,18 +5,18 @@ import exceptions.ArgumentsException;
 import java.util.ArrayList;
 
 public class Utils {
-    private static boolean isValidNumber(int number) {
+    public static boolean isValidNumber(int number) {
         return number > 0 && number < Math.pow(2, 50);
     }
 
-    private static boolean isValidString(String str) {
+    public static boolean isValidString(String str) {
         if (str.length() > 256 || str == "") {
             return false;
         }
         return true;
     }
 
-    private static boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         int intValue;
         if (str == null || str.equals("")) {
             return false;
@@ -83,6 +83,18 @@ public class Utils {
     public static void areValidDeleteCommandArguments(ArrayList<String> args) throws ArgumentsException {
         if (!isNumeric(args.get(0))) {
             throw new ArgumentsException("delete command \"id\" argument is not a number.");
+        }
+    }
+
+    public static void areValidUpdateCommandArguments(ArrayList<String> args) throws ArgumentsException {
+        if (!isNumeric(args.get(0))) {
+            throw new ArgumentsException("update command \"id\" argument is not a number.");
+        }
+        else if(!isValidString(args.get(1))) {
+            throw new ArgumentsException("update command \"attribute\" argument is not valid string.");
+        }
+        else if (!isValidString(args.get(2))) {
+            throw new ArgumentsException("update command \"new value\" argument is not valid string.");
         }
     }
 }

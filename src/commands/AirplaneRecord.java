@@ -38,9 +38,21 @@ public class AirplaneRecord implements Comparable<AirplaneRecord>, Serializable 
         return flights;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setFlights(int flights) {
+        this.flights = flights;
+    }
+
     public String toString() {
         String space = "    ";
-        return "[ID:" + this.id + space + " Plane:" + this.name + space + " Type:" +  this.type + space + " Flights:" + this.flights + "]";
+        return "[ID:" + this.id + space + " Name:" + this.name + space + " Type:" +  this.type + space + " Flights:" + this.flights + "]";
     }
     public int compareTo(AirplaneRecord otherRecord) {
         if(this.id > otherRecord.getId()) {

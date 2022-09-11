@@ -14,9 +14,9 @@ public class Dispatcher {
         this.commands.add(new CreateCommand());
         this.commands.add(new ShowCommand());
 //        this.commands.add(new SearchCommand());
+//        this.commands.add(new HelpCommand());
         this.commands.add(new DeleteCommand());
-//        this.commands.add(new UpdateCommand());
-        // TODO: add rest commands
+        this.commands.add(new UpdateCommand());
     }
 
     public Dispatcher(ArrayList<Command> commands) {

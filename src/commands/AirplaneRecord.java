@@ -2,8 +2,8 @@ package commands;
 
 import java.io.Serializable;
 
-public class AirplaneRecord implements Serializable {
-    private int id;
+public class AirplaneRecord implements Comparable<AirplaneRecord>, Serializable {
+    public int id;
     private String name;
     private String type;
     private int flights;
@@ -41,5 +41,13 @@ public class AirplaneRecord implements Serializable {
     public String toString() {
         String space = "    ";
         return "[ID:" + this.id + space + " Plane:" + this.name + space + " Type:" +  this.type + space + " Flights:" + this.flights + "]";
+    }
+    public int compareTo(AirplaneRecord otherRecord) {
+        if(this.id > otherRecord.getId()) {
+            return 1;
+        } else if(this.id < otherRecord.getId()) {
+            return -1;
+        }
+        return 0;
     }
 }

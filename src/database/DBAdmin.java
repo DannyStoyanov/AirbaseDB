@@ -1,6 +1,7 @@
 package database;
 
 import commands.AirplaneRecord;
+import exceptions.NotExistingRecord;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -27,15 +28,41 @@ public class DBAdmin {
     private boolean isExistingDatabase() {
         try {
             FileInputStream fileStream = new FileInputStream(this.database);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             return false;
         }
         return true;
     }
 
+    private void findAndDeleteRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
+        boolean foundRecord = false;
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == id) {
+                records.remove(i);
+                foundRecord = true;
+                break;
+            }
+        }
+        if (!foundRecord) {
+            throw new NotExistingRecord("Not existing record with id: " + id + " in the database.");
+        }
+    }
+
+    private void saveRecords(ArrayList<AirplaneRecord> records) {
+        try {
+            FileOutputStream fs = new FileOutputStream(this.database);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(records);
+            os.close();
+            System.out.println("Database updated successfully.");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
     // Serialization:
     public void saveNewRecord(AirplaneRecord record) {
-        if(isExistingDatabase()) {
+        if (isExistingDatabase()) {
             try {
                 FileInputStream fileStream = new FileInputStream(this.database);
                 ObjectInputStream is = new ObjectInputStream(fileStream);
@@ -56,8 +83,7 @@ public class DBAdmin {
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
-        }
-        else {
+        } else {
             try {
                 FileOutputStream fs = new FileOutputStream(this.database);
                 ObjectOutputStream os = new ObjectOutputStream(fs);
@@ -81,6 +107,22 @@ public class DBAdmin {
             ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
             printRecords(records, offset, limit);
             os.close();
+        } catch (Exception ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void deleteRecord(int id) {
+        try {
+            FileInputStream fileStream = new FileInputStream(this.database);
+            ObjectInputStream os = new ObjectInputStream(fileStream);
+            Object obj = os.readObject();
+            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+            findAndDeleteRecord(records, id);
+            saveRecords(records);
+            os.close();
+        } catch(NotExistingRecord ex) {
+            ex.printStackTrace();
         } catch (Exception ioException) {
             ioException.printStackTrace();
         }

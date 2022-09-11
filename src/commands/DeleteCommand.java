@@ -6,22 +6,20 @@ import utils.Utils;
 
 import java.util.ArrayList;
 
-public class CreateCommand extends Command {
-    public CreateCommand() {
-        super("create");
-        this.setArgumentsCount(4);
+public class DeleteCommand extends Command {
+    public DeleteCommand() {
+        super("delete");
+        this.setArgumentsCount(1);
     }
-
     public void execute(ArrayList<String> args) {
         try {
             // Validating:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
-            Utils.areValidCreateCommandArguments(args);
+            Utils.areValidDeleteCommandArguments(args);
 
             // Serialization:
-            AirplaneRecord airplaneRecord = new AirplaneRecord(Integer.parseInt(args.get(0)), args.get(1), args.get(2), Integer.parseInt(args.get(3)));
             DBAdmin admin = new DBAdmin("recordsDB.ser");
-            admin.saveNewRecord(airplaneRecord);
+            admin.deleteRecord(Integer.parseInt(args.get(0)));
         } catch (ArgumentsException exception) {
             exception.printStackTrace();
         }

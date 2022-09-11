@@ -47,6 +47,7 @@ public class AirbaseSystem {
     }
 
     public void start() {
+        System.out.println("[Type \"help\" to see full list of commands.]");
         String line;
         while (true) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));

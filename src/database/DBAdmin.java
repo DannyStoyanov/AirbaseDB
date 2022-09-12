@@ -102,21 +102,6 @@ public class DBAdmin {
         }
     }
 
-    // Linear Search algorithm, Time complexity = O(n)
-//    private void findAndShowRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
-//        boolean foundRecord = false;
-//        for (int i = 0; i < records.size(); i++) {
-//            if (records.get(i).getId() == id) {
-//                printRecord(records.get(i));
-//                foundRecord = true;
-//                break;
-//            }
-//        }
-//        if (!foundRecord) {
-//            throw new NotExistingRecord("Not existing record with id: " + id + " in the database.");
-//        }
-//    }
-
     // Binary Search algorithm, Time complexity = O(logn)
     private void binarySearchRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
         boolean foundRecord = false;

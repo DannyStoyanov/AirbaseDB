@@ -20,9 +20,11 @@ public class ShowCommand extends Command {
             // Validation:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
             Utils.areValidShowCommandArguments(args);
+
+            // Main functionality:
             int offset = Integer.parseInt(args.get(0));
             int limit = Integer.parseInt(args.get(1));
-            DBAdmin admin = new DBAdmin("recordsDB.ser");
+            DBAdmin admin = new DBAdmin("planesDB.ser");
             admin.showRecords(offset, limit);
         } catch (ArgumentsException ex) {
             ex.printStackTrace();

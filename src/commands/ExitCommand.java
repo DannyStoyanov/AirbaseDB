@@ -14,7 +14,10 @@ public class ExitCommand extends Command {
 
     public void execute(ArrayList<String> args) {
         try {
+            // Validation:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
+
+            // Main functionality:
             System.exit(0);
         } catch (ArgumentsException exception) {
             exception.printStackTrace();

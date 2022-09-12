@@ -11,13 +11,15 @@ public class SearchCommand extends Command {
         super("search");
         this.setArgumentsCount(1);
     }
+
     public void execute(ArrayList<String> args) {
         try {
             // Validation:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
             Utils.areValidSearchCommandArguments(args);
 
-            DBAdmin admin = new DBAdmin("recordsDB.ser");
+            // Main functionality:
+            DBAdmin admin = new DBAdmin("planesDB.ser");
             admin.searchRecord(Integer.parseInt(args.get(0)));
         } catch (ArgumentsException ex) {
             ex.printStackTrace();

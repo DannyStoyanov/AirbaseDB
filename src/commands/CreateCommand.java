@@ -18,9 +18,9 @@ public class CreateCommand extends Command {
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
             Utils.areValidCreateCommandArguments(args);
 
-            // Serialization:
+            // Main functionality:
             AirplaneRecord airplaneRecord = new AirplaneRecord(Integer.parseInt(args.get(0)), args.get(1), args.get(2), Integer.parseInt(args.get(3)));
-            DBAdmin admin = new DBAdmin("recordsDB.ser");
+            DBAdmin admin = new DBAdmin("planesDB.ser");
             admin.saveNewRecord(airplaneRecord);
         } catch (ArgumentsException exception) {
             exception.printStackTrace();

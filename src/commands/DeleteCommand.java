@@ -11,14 +11,15 @@ public class DeleteCommand extends Command {
         super("delete");
         this.setArgumentsCount(1);
     }
+
     public void execute(ArrayList<String> args) {
         try {
             // Validating:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
             Utils.areValidDeleteCommandArguments(args);
 
-            // Serialization:
-            DBAdmin admin = new DBAdmin("recordsDB.ser");
+            // Main functionality:
+            DBAdmin admin = new DBAdmin("planesDB.ser");
             admin.deleteRecord(Integer.parseInt(args.get(0)));
         } catch (ArgumentsException exception) {
             exception.printStackTrace();

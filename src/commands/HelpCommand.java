@@ -11,6 +11,7 @@ public class HelpCommand extends Command {
         super("help");
         this.setArgumentsCount(0);
     }
+
     private void printCommandsList() {
         System.out.println("--- <> ---  List with commands --- <> ---");
         System.out.println("create     <id> <name> <type> <flights>");
@@ -22,10 +23,13 @@ public class HelpCommand extends Command {
         System.out.println("--- --- --- --- --- <> --- --- --- --- ---");
 
     }
+
     public void execute(ArrayList<String> args) {
         try {
             // Validation:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
+
+            // Main functionality:
             printCommandsList();
         } catch (ArgumentsException ex) {
             ex.printStackTrace();

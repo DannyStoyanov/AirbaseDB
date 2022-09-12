@@ -11,14 +11,15 @@ public class UpdateCommand extends Command {
         super("update");
         this.setArgumentsCount(3);
     }
+
     public void execute(ArrayList<String> args) {
         try {
             // Validating:
             Utils.assertArgumentsCount(args, this.getArgumentsCount());
             Utils.areValidUpdateCommandArguments(args);
 
-            // Serialization:
-            DBAdmin admin = new DBAdmin("recordsDB.ser");
+            // Main functionality:
+            DBAdmin admin = new DBAdmin("planesDB.ser");
             admin.updateRecord(Integer.parseInt(args.get(0)), args.get(1), args.get(2));
         } catch (ArgumentsException exception) {
             exception.printStackTrace();

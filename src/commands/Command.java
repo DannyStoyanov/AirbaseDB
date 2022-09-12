@@ -20,7 +20,7 @@ abstract public class Command {
     // Abstract function:
     public abstract void execute(ArrayList<String> args);
 
-    // Selectors:
+    // Getters(Selectors):
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ abstract public class Command {
         return argumentsCount;
     }
 
-    // Mutators:
+    // Setters(Mutators):
     public void setArguments(ArrayList<String> arguments) {
         this.arguments = arguments;
     }

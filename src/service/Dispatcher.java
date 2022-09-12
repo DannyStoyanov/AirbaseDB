@@ -29,14 +29,14 @@ public class Dispatcher {
 
     public void processCommand(AirbaseSystem.ParsedCommand parsedCommand) throws InvalidCommand {
         boolean validCommand = false;
-        for (Command command: this.commands) {
-            if(parsedCommand.getCommandName().equals(command.getName())) {
+        for (Command command : this.commands) {
+            if (parsedCommand.getCommandName().equals(command.getName())) {
                 command.execute(parsedCommand.getCommandArguments());
                 validCommand = true;
                 break;
             }
         }
-        if(!validCommand) {
+        if (!validCommand) {
             throw new InvalidCommand("Invalid command.");
         }
     }

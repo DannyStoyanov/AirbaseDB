@@ -159,62 +159,82 @@ public class DBAdmin {
 
     // Deserialization:
     public void showRecords(int offset, int limit) {
-        try {
-            FileInputStream fileStream = new FileInputStream(this.database);
-            ObjectInputStream os = new ObjectInputStream(fileStream);
-            Object obj = os.readObject();
-            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-            printRecords(records, offset, limit);
-            os.close();
-        } catch (Exception ioException) {
-            ioException.printStackTrace();
+        if (isExistingDatabase()) {
+            try {
+                FileInputStream fileStream = new FileInputStream(this.database);
+                ObjectInputStream os = new ObjectInputStream(fileStream);
+                Object obj = os.readObject();
+                ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+                printRecords(records, offset, limit);
+                os.close();
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("There are no records yet. Empty database.");
         }
     }
 
     public void deleteRecord(int id) {
-        try {
-            FileInputStream fileStream = new FileInputStream(this.database);
-            ObjectInputStream os = new ObjectInputStream(fileStream);
-            Object obj = os.readObject();
-            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-            findAndDeleteRecord(records, id);
-            saveRecords(records);
-            os.close();
-        } catch (NotExistingRecord ex) {
-            ex.printStackTrace();
-        } catch (Exception ioException) {
-            ioException.printStackTrace();
+        if(isExistingDatabase()) {
+            try {
+                FileInputStream fileStream = new FileInputStream(this.database);
+                ObjectInputStream os = new ObjectInputStream(fileStream);
+                Object obj = os.readObject();
+                ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+                findAndDeleteRecord(records, id);
+                saveRecords(records);
+                os.close();
+            } catch (NotExistingRecord ex) {
+                ex.printStackTrace();
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("There are no records yet. Empty database.");
         }
     }
 
     public void updateRecord(int id, String attribute, String newValue) {
-        try {
-            FileInputStream fileStream = new FileInputStream(this.database);
-            ObjectInputStream is = new ObjectInputStream(fileStream);
-            Object obj = is.readObject();
-            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-            findAndUpdateRecord(records, id, attribute, newValue);
-            saveRecords(records);
-            is.close();
-        } catch (NotExistingRecord ex) {
-            ex.printStackTrace();
-        } catch (Exception ioException) {
-            ioException.printStackTrace();
+        if (isExistingDatabase()) {
+            try {
+                FileInputStream fileStream = new FileInputStream(this.database);
+                ObjectInputStream is = new ObjectInputStream(fileStream);
+                Object obj = is.readObject();
+                ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+                findAndUpdateRecord(records, id, attribute, newValue);
+                saveRecords(records);
+                is.close();
+            } catch (NotExistingRecord ex) {
+                ex.printStackTrace();
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("There are no records yet. Empty database.");
         }
     }
 
     public void searchRecord(int id) {
-        try {
-            FileInputStream fileStream = new FileInputStream(this.database);
-            ObjectInputStream is = new ObjectInputStream(fileStream);
-            Object obj = is.readObject();
-            ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-            findAndShowRecord(records, id);
-            is.close();
-        } catch (NotExistingRecord ex) {
-            ex.printStackTrace();
-        } catch (Exception ioException) {
-            ioException.printStackTrace();
+        if(isExistingDatabase()) {
+            try {
+                FileInputStream fileStream = new FileInputStream(this.database);
+                ObjectInputStream is = new ObjectInputStream(fileStream);
+                Object obj = is.readObject();
+                ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
+                findAndShowRecord(records, id);
+                is.close();
+            } catch (NotExistingRecord ex) {
+                ex.printStackTrace();
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("There are no records yet. Empty database.");
         }
     }
 }

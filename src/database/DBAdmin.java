@@ -40,6 +40,15 @@ public class DBAdmin {
         return true;
     }
 
+    private boolean existingRecord(ArrayList<AirplaneRecord> records, AirplaneRecord record) {
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == record.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void findAndDeleteRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
         boolean foundRecord = false;
         for (int i = 0; i < records.size(); i++) {
@@ -93,13 +102,36 @@ public class DBAdmin {
         }
     }
 
-    private void findAndShowRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
+    // Linear Search algorithm, Time complexity = O(n)
+//    private void findAndShowRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
+//        boolean foundRecord = false;
+//        for (int i = 0; i < records.size(); i++) {
+//            if (records.get(i).getId() == id) {
+//                printRecord(records.get(i));
+//                foundRecord = true;
+//                break;
+//            }
+//        }
+//        if (!foundRecord) {
+//            throw new NotExistingRecord("Not existing record with id: " + id + " in the database.");
+//        }
+//    }
+
+    // Binary Search algorithm, Time complexity = O(logn)
+    private void binarySearchRecord(ArrayList<AirplaneRecord> records, int id) throws NotExistingRecord {
         boolean foundRecord = false;
-        for (int i = 0; i < records.size(); i++) {
-            if (records.get(i).getId() == id) {
-                printRecord(records.get(i));
+        int i = 0;
+        int j = records.size() - 1;
+        while (i <= j) {
+            int mid = ((j - i) / 2) + i;
+            if (records.get(mid).getId() == id) {
+                printRecord(records.get(mid));
                 foundRecord = true;
                 break;
+            } else if (records.get(mid).getId() < id) {
+                i = mid + 1;
+            } else {
+                j = mid - 1;
             }
         }
         if (!foundRecord) {
@@ -127,18 +159,22 @@ public class DBAdmin {
                 ObjectInputStream is = new ObjectInputStream(fileStream);
                 Object obj = is.readObject();
                 ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-                try {
-                    FileOutputStream fs = new FileOutputStream(this.database);
-                    ObjectOutputStream os = new ObjectOutputStream(fs);
-                    records.add(record);
-                    Collections.sort(records);
-                    os.writeObject(records);
-                    os.close();
-                    System.out.println("Airplane saved successfully.");
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                if (!existingRecord(records, record)) {
+                    try {
+                        FileOutputStream fs = new FileOutputStream(this.database);
+                        ObjectOutputStream os = new ObjectOutputStream(fs);
+                        records.add(record);
+                        Collections.sort(records);
+                        os.writeObject(records);
+                        os.close();
+                        System.out.println("Airplane saved successfully.");
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                    is.close();
+                } else {
+                    System.out.println("Couldn't create new record. There is existing record with id " + record.getId() + ".");
                 }
-                is.close();
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
@@ -170,14 +206,13 @@ public class DBAdmin {
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("There are no records yet. Empty database.");
         }
     }
 
     public void deleteRecord(int id) {
-        if(isExistingDatabase()) {
+        if (isExistingDatabase()) {
             try {
                 FileInputStream fileStream = new FileInputStream(this.database);
                 ObjectInputStream os = new ObjectInputStream(fileStream);
@@ -191,8 +226,7 @@ public class DBAdmin {
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("There are no records yet. Empty database.");
         }
     }
@@ -212,28 +246,26 @@ public class DBAdmin {
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("There are no records yet. Empty database.");
         }
     }
 
     public void searchRecord(int id) {
-        if(isExistingDatabase()) {
+        if (isExistingDatabase()) {
             try {
                 FileInputStream fileStream = new FileInputStream(this.database);
                 ObjectInputStream is = new ObjectInputStream(fileStream);
                 Object obj = is.readObject();
                 ArrayList<AirplaneRecord> records = (ArrayList<AirplaneRecord>) obj;
-                findAndShowRecord(records, id);
+                binarySearchRecord(records, id);
                 is.close();
             } catch (NotExistingRecord ex) {
                 ex.printStackTrace();
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("There are no records yet. Empty database.");
         }
     }

@@ -27,7 +27,7 @@ public class Dispatcher {
         return commands;
     }
 
-    public void processCommand(AirbaseSystem.ParsedCommand parsedCommand) throws InvalidCommand {
+    public void processCommand(ParsedCommand parsedCommand) throws InvalidCommand {
         boolean validCommand = false;
         for (Command command : this.commands) {
             if (parsedCommand.getCommandName().equals(command.getName())) {

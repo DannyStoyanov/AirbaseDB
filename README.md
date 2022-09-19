@@ -12,7 +12,7 @@ The main idea of the project is based on the architecture which is the command p
 
 ## Requirements
 
-Java jdk
+JVM(Java Virtual Machine)
 
 ## Usage
 
